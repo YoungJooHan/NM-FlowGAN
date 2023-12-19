@@ -36,7 +36,7 @@ NM-FlowGAN
 
 ----
 ## Test Pretrained Model
-Please download the noise synthesizing model and denoising model trained on SIDD medium from this [Link:NoiseModel](https://drive.google.com/file/d/1WaJg2ykB5k1KTd53zm7S9_WPSvg37Sfy/view?usp=sharing), [Link:DenoisingModel](https://drive.google.com/file/d/1W_34cuQvGRAjyCMwbLj3JZX2aoRbvboE/view?usp=sharing). Put it in path:
+Please download the noise synthesizing model and denoising model trained on SIDD medium from these [Link:NoiseModel](https://drive.google.com/file/d/1WaJg2ykB5k1KTd53zm7S9_WPSvg37Sfy/view?usp=sharing), [Link:DenoisingModel](https://drive.google.com/file/d/1W_34cuQvGRAjyCMwbLj3JZX2aoRbvboE/view?usp=sharing). Put it in path:
 
 ```
 /ckpt/NMFlowGAN_NoiseModeler.pth
