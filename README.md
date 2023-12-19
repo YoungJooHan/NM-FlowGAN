@@ -81,3 +81,16 @@ python test.py --config=./conf/NMFlowGAN_Denoiser.yaml LOG.session_name [SESSION
 ---
 ## Acknowledgement
 The codes are based on [AP-BSN](https://github.com/wooseoklee4/AP-BSN),  [Noise2NoiseFlow](https://github.com/SamsungLabs/Noise2NoiseFlow). Thanks for the great works.
+
+---
+## BibTex
+```
+@misc{han2023nmflowgan,
+    title={NM-FlowGAN: Modeling sRGB Noise with a Hybrid Approach based on Normalizing Flows and Generative Adversarial Networks},
+    author={Young Joo Han and Ha-Jin Yu},
+    year={2023},
+    eprint={2312.10112},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
+```
