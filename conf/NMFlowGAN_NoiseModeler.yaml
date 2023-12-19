@@ -1,0 +1,77 @@
+LOG:
+  session_name: 'nmflowgan'
+
+BASE:
+  trainer: 'NoiseFlowGANTrainer'
+  model: 'nmflowgan'
+
+DATA:
+  train_dataset: 'SIDD_HDF'
+  train_dataset_path: './data/SIDD/HDF5_s96_o48/noise_gen/train'
+  validation_dataset: 'SIDD_HDF'
+  validation_dataset_path: './data/SIDD/HDF5_s96_o48/noise_gen/test'
+  test_dataset: 'SIDD_HDF'
+  test_dataset_path: './data/SIDD/HDF5_s96_o48/noise_gen/test'
+  batch_size: 128
+  TRAIN_DATALOADER:
+    n_repeat: 1
+  VALIDATION_DATALOADER:
+    step: 100
+  TEST_DATALOADER:
+    step: 1
+
+MODEL:
+  input_type: ['noisy', 'clean', 'kwargs']
+  test_input_type: ['noisy', 'clean', 'kwargs']
+  NMFLOW:
+    in_ch: 3
+    num_bits: 8
+    pre_arch: "UD" 
+    arch: "NE|SAL|SDL|CL2|SAL|SDL|CL2"
+    conv_net_feats: 16
+  UNET:
+      in_channels: 3
+      n_classes: 3
+      depth: 5
+      wf: 6
+      padding: True
+      batch_norm: False
+      up_mode: 'upconv'
+      residual: True
+      drop_p: 0.0
+  NMFLOWGAN_CRITIC:
+    in_ch: 6
+    nc: 64
+    num_bits: 8
+
+TRAIN:
+  init_lr: 1e-4
+  loss: '1.0*NLLLoss+1.0*GANLoss'
+  tmp_info: ['std_z', 'real_sub_fake']
+  max_epochs: 40
+  NOISE_GENERATOR_TRAINER:
+    generator_iter_step: 5
+    critic_noise: True
+
+SCHEDULER:
+  type: step
+  STEP:
+    step_size: 10
+    gamma: 0.5
+
+VALIDATION:
+  add_con: 0.5
+  scale: None
+  floor: True
+  using_bits: 8
+  save_image: True
+
+TEST:
+  crop: False
+  proc: False
+  add_con: 0.5
+  scale: None
+  floor: True
+  imread: 'rgb'
+  save_ext: 'png'
+  using_bits: 8

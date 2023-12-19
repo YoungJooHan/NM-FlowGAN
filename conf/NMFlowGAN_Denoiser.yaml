@@ -1,0 +1,73 @@
+BASE:
+  trainer: 'SLDenoisingTrainer'
+  model: 'DnCNNFlowGAN'
+LOG:
+  session_name: 'dncnnflowgan'
+
+MODEL:
+  input_type: ['clean', 'kwargs']
+  test_input_type: ['noisy']
+  DNCNNFLOWGAN:
+    pretrained_path: "./ckpt/NMFlowGAN_NoiseModeler.pth"
+    num_bits: 8
+  NMFLOW:
+    in_ch: 3
+    num_bits: 8
+    pre_arch: "UD"
+    arch: "NE|SAL|SDL|CL2|SAL|SDL|CL2"
+    conv_net_feats: 16
+  UNET:
+      in_channels: 3
+      n_classes: 3
+      depth: 5
+      wf: 6
+      padding: True
+      batch_norm: False
+      up_mode: 'upconv'
+      residual: True
+      drop_p: 0.0
+  DNCNN:
+    channels: 3
+    num_of_layers: 18
+    features: 64
+    
+TRAIN:
+  max_epochs: 30
+  init_lr: 1e-4
+  loss: "1.0*L2Loss"
+
+VALIDATION:
+  using_bits: 8
+  save_image: True
+  add_con: 0.5
+  scale: None
+  floor: True
+
+TEST:
+  using_bits: 8
+  proc: False
+  crop: False
+  imread: 'rgb'
+  save_ext: 'png'
+  add_con: 0.5
+  scale: None
+  floor: True
+
+SCHEDULER:
+  type: step
+  STEP:
+    step_size: 5
+    gamma: 0.5
+
+DATA:
+  train_dataset: 'SIDD_HDF'
+  train_dataset_path: './data/SIDD/HDF5_s96_o48/denoiser'
+  validation_dataset: 'SIDD_val'
+  validation_dataset_path: './data/SIDD'
+  test_dataset: 'SIDD_benchmark' #'SIDD_val'
+  test_dataset_path: './data/SIDD'
+  batch_size: 128
+
+  VALIDATION_DATALOADER:
+    step: 5
+
