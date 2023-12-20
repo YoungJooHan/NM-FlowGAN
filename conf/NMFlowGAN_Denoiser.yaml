@@ -64,7 +64,7 @@ DATA:
   train_dataset_path: './data/SIDD/HDF5_s96_o48/denoiser'
   validation_dataset: 'SIDD_val'
   validation_dataset_path: './data/SIDD'
-  test_dataset: 'SIDD_benchmark' #'SIDD_val'
+  test_dataset: 'SIDD_val' #'SIDD_benchmark' #'SIDD_val'
   test_dataset_path: './data/SIDD'
   batch_size: 128
 

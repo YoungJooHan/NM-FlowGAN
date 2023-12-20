@@ -102,16 +102,29 @@ def psnr(x, y, mask=None, max_val=1.):
         mse = torch.sum(((x - y) ** 2) * mask) / mask.sum() 
     return 10 * log10(max_val**2 / mse.item())
 
-def ssim(x, y, mask=None, data_range=None):
-    x = x[0,0].cpu().numpy()
-    y = y[0,0].cpu().numpy()
-    mssim, S = structural_similarity(x, y, full=True, data_range=data_range)
-    if mask is not None:
-        mask = mask[0,0].cpu().numpy()
-        return (S * mask).sum() / mask.sum()
-    else:
-        return mssim
-    
+def ssim(img1, img2, data_range):
+    '''
+    image value range : [0 - data_range]
+    clipping for model output
+    '''
+    if len(img1.shape) == 4:
+        img1 = img1[0]
+    if len(img2.shape) == 4:
+        img2 = img2[0]
+
+    # tensor to numpy
+    if isinstance(img1, torch.Tensor):
+        img1 = tensor2np(img1)
+    if isinstance(img2, torch.Tensor):
+        img2 = tensor2np(img2)
+
+    # numpy value cliping
+    img2 = np.clip(img2, 0, data_range)
+    img1 = np.clip(img1, 0, data_range)
+
+    # https://forum.image.sc/t/how-to-calculate-ssim-of-muti-channel-images-since-the-function-structural-similarity-deprecate-the-parameter-multichannel/79693
+    return structural_similarity(img1, img2, channel_axis=-1, data_range=data_range)
+
 class AverageMeter(object):
     """
     Computes and stores the average and current value.
