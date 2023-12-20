@@ -102,7 +102,7 @@ class NMFlowGANDenoiser(nn.Module):
             kwargs_flow,
             kwargs_unet,
             pretrained_path,
-            num_bits=14,
+            num_bits=8,
         ):
         super().__init__()
         self.denoiser = denoiser

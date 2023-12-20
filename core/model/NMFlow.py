@@ -17,9 +17,9 @@ class NMFlow(nn.Module):
         ch_exp_coef = 1.,
         width_exp_coef = 2.,
         num_bits=16,
-        conv_net_feats=32,
-        pre_arch="CD|UD",
-        arch="NE|AN|C|CAC|AN|C|CAC|AN|C|CAC|AN|C|CAC|AN|C|CAC" # glow-style model
+        conv_net_feats=16,
+        pre_arch="UD",
+        arch="NE|SAL|SDL|CL2|SAL|SDL|CL2"
     ):
         super(NMFlow, self).__init__()
         self.num_bits=num_bits
